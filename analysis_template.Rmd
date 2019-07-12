@@ -122,10 +122,6 @@ gp + ylim(0, 200)
 #must have been comparing to some base line number which is why viability is outside the upper and lower boundaries. Additionally we suspect that using the CCLE study, since the distrubution of drug concentrations are the same, we can make inferences about the toxic properties of the different drugs
 
 
-```
-Range
-```{r
->>>>>>> 43de37231147dbfdd7b3387a61da0a0d9b82cf77
 5. Read the csv file containing the summarized data. What kinds
 of variables are in the data? What does each column represent?
 
