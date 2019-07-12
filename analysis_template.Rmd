@@ -88,6 +88,24 @@ and below 100)? Try to come up with explanations about
 the values that are out of range. Are these due to technical
 issues? Biology?
 
+```{r}
+rawData %>%
+    summarize(min_viability = min(viability),
+              max_viability = max(viability),
+              n_too_small   = sum(viability < 0),
+              n_too_big     = sum(viability > 100))
+
+print(length(rawData$viability))
+
+rawData %>%
+    ggplot(aes(x = viability, group = study, fill = study, color = study)) +
+    geom_density(alpha = 1/4) +
+    xlim(0, 170) +
+    ggtitle("Distributions of viability scores by study")
+```
+
+#must have been comparing to some base line number, 
+
 5. Read the csv file containing the summarized data. What kinds
 of variables are in the data? What does each column represent?
 
