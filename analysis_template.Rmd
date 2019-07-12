@@ -135,12 +135,6 @@ glimpse(summary)
 
 ```
 
-```{r}
-highest.resistance <- summary %>% 
-        
-
-```
-
 C50 (Half Maximal Inhibitory Concentration): the estimated concentration of the drug that will result in half (50%) of the cells surviving. Drugs with higher C50 are less toxic, or alternatively the cell is more resistant
 
 AUC (Area Under the Curve): despite the name, this is actually the area above the curve estimated by the drug concentration and viability data. Higher AUC corresponds to lower cell resistance or alternatively higher toxicity
@@ -148,6 +142,19 @@ AUC (Area Under the Curve): despite the name, this is actually the area above th
 
 6. Plot histograms of the viability scores at different levels of drug
 doses. Are stronger drug concentrations consistent with lower viability scores?
+
+```{r}
+
+rawData %>%
+    ggplot(aes(x = log2(viability))) +
+    geom_histogram(aes( color = study), binwidth = 0.5) +
+    facet_wrap(~ concentration) +
+    ggtitle("Distributions of viability by study")
+    stat_bin(bins = 30)
+
+```
+
+Stronger concentrations in the drug result in lower viability scores. We can observe the y axis being skewed and values translated to the left.
 
 ### Using Correlation Measures to Assess Replicability of Drug Response Studies
 
