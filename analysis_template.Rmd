@@ -75,10 +75,11 @@ expect from the description of the data?
 ```{r}
 
 rawData %>%
-    ggplot(aes(x = log2(concentration))) +
-    geom_histogram(fill = "gray", color = "black") +
-    facet_wrap(~ study) +
-    ggtitle("Distributions of concentrations by study")
+    ggplot(aes(x = log2(viability))) +
+    geom_histogram(aes( color = study), binwidth = 0.5) +
+    facet_wrap(~ drug) +
+    ggtitle("Distributions of viability by study")
+    stat_bin(bins = 30)
 
 ```
 
@@ -87,9 +88,17 @@ expected range according to the definition of viability (e.g. above 0
 and below 100)? Try to come up with explanations about
 the values that are out of range. Are these due to technical
 issues? Biology?
+```{r}
+rawData %>%
+    summarize(min_viability = min(viability),
+              max_viability = max(viability),
+              n_too_small   = sum(viability < 0),
+              n_too_big     = sum(viability > 100))
+```
 
 ```{r}
 rawData %>%
+<<<<<<< HEAD
     summarize(min_viability = min(viability),
               max_viability = max(viability),
               n_too_small   = sum(viability < 0),
@@ -98,14 +107,23 @@ rawData %>%
 print(length(rawData$viability))
 
 rawData %>%
+=======
+>>>>>>> 43de37231147dbfdd7b3387a61da0a0d9b82cf77
     ggplot(aes(x = viability, group = study, fill = study, color = study)) +
     geom_density(alpha = 1/4) +
     xlim(0, 170) +
     ggtitle("Distributions of viability scores by study")
+<<<<<<< HEAD
 ```
 
 #must have been comparing to some base line number, 
 
+=======
+
+```
+Range
+```{r
+>>>>>>> 43de37231147dbfdd7b3387a61da0a0d9b82cf77
 5. Read the csv file containing the summarized data. What kinds
 of variables are in the data? What does each column represent?
 
