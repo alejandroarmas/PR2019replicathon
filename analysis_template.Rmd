@@ -66,7 +66,7 @@ unique(rawData$concentration)
 
 ```
 
-3. Histograms, appart from telling us how the data is
+3. Histograms, apart from telling us how the data is
 distributed, can also make evident potential
 problems with the data. Plot a histogram
 of drug viabilities. Does it look as one would
@@ -74,7 +74,11 @@ expect from the description of the data?
 
 ```{r}
 
-
+rawData %>%
+    ggplot(aes(x = log2(concentration))) +
+    geom_histogram(fill = "gray", color = "black") +
+    facet_wrap(~ study) +
+    ggtitle("Distributions of concentrations by study")
 
 ```
 
