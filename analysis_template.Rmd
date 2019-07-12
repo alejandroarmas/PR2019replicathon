@@ -129,6 +129,23 @@ summary <- readRDS("data/summarizedPharmacoData.rds")
 
 ```
 
+```{r}
+
+glimpse(summary)
+
+```
+
+```{r}
+highest.resistance <- summary %>% 
+        
+
+```
+
+C50 (Half Maximal Inhibitory Concentration): the estimated concentration of the drug that will result in half (50%) of the cells surviving. Drugs with higher C50 are less toxic, or alternatively the cell is more resistant
+
+AUC (Area Under the Curve): despite the name, this is actually the area above the curve estimated by the drug concentration and viability data. Higher AUC corresponds to lower cell resistance or alternatively higher toxicity
+
+
 6. Plot histograms of the viability scores at different levels of drug
 doses. Are stronger drug concentrations consistent with lower viability scores?
 
