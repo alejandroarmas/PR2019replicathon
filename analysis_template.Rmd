@@ -37,7 +37,6 @@ load the data
 ```{r}
 model.summary <- readRDS("data/modelSummarizedPharmacoData.rds")
 rawData <- readRDS("data/rawPharmacoData.rds")
-summary <- readRDS("data/summarizedPharmacoData.rds")
 
 ```
 
@@ -124,6 +123,11 @@ gp + ylim(0, 200)
 
 5. Read the csv file containing the summarized data. What kinds
 of variables are in the data? What does each column represent?
+
+```{r}
+summary <- readRDS("data/summarizedPharmacoData.rds")
+
+```
 
 6. Plot histograms of the viability scores at different levels of drug
 doses. Are stronger drug concentrations consistent with lower viability scores?
