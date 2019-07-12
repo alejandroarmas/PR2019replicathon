@@ -98,27 +98,29 @@ rawData %>%
 
 ```{r}
 rawData %>%
-<<<<<<< HEAD
-    summarize(min_viability = min(viability),
-              max_viability = max(viability),
-              n_too_small   = sum(viability < 0),
-              n_too_big     = sum(viability > 100))
-
-print(length(rawData$viability))
-
-rawData %>%
-=======
->>>>>>> 43de37231147dbfdd7b3387a61da0a0d9b82cf77
     ggplot(aes(x = viability, group = study, fill = study, color = study)) +
     geom_density(alpha = 1/4) +
     xlim(0, 170) +
     ggtitle("Distributions of viability scores by study")
-<<<<<<< HEAD
 ```
 
-#must have been comparing to some base line number, 
+```{r}
+gp <- rawData %>%
+    ggplot(aes(y = viability, x = drug, fill = study)) +
+    scale_x_discrete() + 
+    annotate(geom = "rect", ymin = 0, ymax = 100, xmin = -Inf, xmax = Inf,
+             fill = 'black', alpha = 1/6) +
+    geom_boxplot(outlier.alpha = 1/5) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 1/2)) +
+    ggtitle("Distributions of viability scores by drug and study")
+gp + ylim(0, 200)
 
-=======
+
+```
+
+
+#must have been comparing to some base line number which is why viability is outside the upper and lower boundaries. Additionally we suspect that using the CCLE study, since the distrubution of drug concentrations are the same, we can make inferences about the toxic properties of the different drugs
+
 
 ```
 Range
