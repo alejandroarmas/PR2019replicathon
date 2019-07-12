@@ -126,8 +126,9 @@ of variables are in the data? What does each column represent?
 
 ```{r}
 summary <- readRDS("data/summarizedPharmacoData.rds")
-
+glimpse(summary)
 ```
+
 
 6. Plot histograms of the viability scores at different levels of drug
 doses. Are stronger drug concentrations consistent with lower viability scores?
@@ -135,9 +136,25 @@ doses. Are stronger drug concentrations consistent with lower viability scores?
 ### Using Correlation Measures to Assess Replicability of Drug Response Studies
 
 1. Create a scatterplot for each drug comparing the AUC in GDSC and CCLE for all cell lines (hint: code from Tutorial 1b may help).
+```{r}
+summary %>%
 
+ggplot( aes(x = auc_GDSC, y = auc_CCLE)) +
+    geom_point(alpha = 1/2) +
+    geom_smooth() +
+    facet_wrap(~drug) +
+    xlab("GDSC AUC") +
+    ylab("CCLE AUC") +
+    ggtitle("AUC summaries of cell line response to drug across studies")
+
+
+```
+```
 2. Calculate correlation coefficients of the AUC in GDSC and CCLE for each drug (hint: code from Tutorial 1b may help). 
+```{r}
 
+
+```
 3. Based on the scatterplot and correlation values, would you say that they tend to agree? Why or why not?
 
 4. Does the AUC or IC50 suggest more agreement between the studies? 
