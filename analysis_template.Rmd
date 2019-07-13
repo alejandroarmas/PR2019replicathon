@@ -9,13 +9,10 @@ author: Giovanni Cortés & Alejandro Armas
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Instructions:
 
-In this R Markdown document, you and your team will create a fully reproducible analysis with the goal of assessing and interpreting the replicability of two pharmacogenomic experiments. This document should contain all of the text and code of your analyses, which will allow others to run, interpret, and reuse your work.
+In this R Markdown document, you and your team will create a fully reproducible analysis with the goal of assessing and interpreting the replicability of two pharmacogenomic experiments. 
 
-The questions below will help guide you in your analyses and interpretation of results. You don't need to answer every question, but for the problems you do complete, make sure that you completely justify your conclusions by explaining your reasoning and including numerical summaries and data visualizations wherever possible. There are four tutorials (also R Markdown documents) that will help you learn new tools to tackle these problems, and the questions are divided into four sections corresponding to the tutorials (though many overlap with more than one tutorial). If questions arise during your analyses that do not fit into these problems, feel free to include those as well. 
-
-For each answer, include text by simply typing below the question. Include code in code blocks (include three back ticks at the start and end of each code block):
+Probably the most important step of analyzing datasets is to actually understand the data. This process is crucial to know what kind of questions we can answer with it.
 
 ```{r}
 library(tidyverse)
