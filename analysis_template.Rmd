@@ -1,5 +1,9 @@
 ---
+<<<<<<< HEAD
 title: "Los Codiquas"
+=======
+title: "Los Codicuas"
+>>>>>>> 4cdb82768095c912a4cc693773cdfadd6769b171
 output: html_document
 date: Replicathon 2019
 author: Giovanni Cortés & Alejandro Armas
@@ -9,16 +13,13 @@ author: Giovanni Cortés & Alejandro Armas
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Instructions:
 
-In this R Markdown document, you and your team will create a fully reproducible analysis with the goal of assessing and interpreting the replicability of two pharmacogenomic experiments. This document should contain all of the text and code of your analyses, which will allow others to run, interpret, and reuse your work.
+In this R Markdown document, you and your team will create a fully reproducible analysis with the goal of assessing and interpreting the replicability of two pharmacogenomic experiments. 
 
-The questions below will help guide you in your analyses and interpretation of results. You don't need to answer every question, but for the problems you do complete, make sure that you completely justify your conclusions by explaining your reasoning and including numerical summaries and data visualizations wherever possible. There are four tutorials (also R Markdown documents) that will help you learn new tools to tackle these problems, and the questions are divided into four sections corresponding to the tutorials (though many overlap with more than one tutorial). If questions arise during your analyses that do not fit into these problems, feel free to include those as well. 
-
-For each answer, include text by simply typing below the question. Include code in code blocks (include three back ticks at the start and end of each code block):
+Probably the most important step of analyzing datasets is to actually understand the data. This process is crucial to know what kind of questions we can answer with it.
 
 ```{r}
-#Your code goes here
+library(tidyverse)
 ```
 
 You may find it helpful to use the version control and code sharing system called GitHub to work together with your team so that all of you can edit the same document and keep track of its changes. Here is a [setup guide](https://github.com/datasciencelabs/2016/blob/master/lectures/git-and-github/setting-up-git.Rmd) and [brief introduction to Git and GitHub](https://github.com/datasciencelabs/2016/blob/master/lectures/git-and-github/version-control.Rmd) from another course. The mentors will be able to help if you run into problems. 
@@ -46,9 +47,10 @@ rawData <- readRDS("data/rawPharmacoData.rds")
 
 1. How many cell-lines are contained in the data?
 ```{r}
+
 length(unique(model.summary$cellLine))
 length(unique(rawData$cellLine))
-length(unique(summary$cellLine))
+
 
 ```
 
@@ -203,6 +205,8 @@ The AUC correlation values suggest more agreement between the studies than the I
 The drug that is most correlated is PD-0325901, the drug that is least correlated is PHA-665752
 
 6. If you calculated more than one type of correlation coefficient (for example Pearson and Spearman), how do they differ? Which do you think is a better summary of the consistency between the two studies? 
+
+The way Pearson and Spearman differ is that Pearson is more sensitive to outliers, it measures the magnitude of differences and is a more accurate representation of linearity whereas Spearman is more interested in the order of values.
 
 7. We have explored Pearson and Spearman correlation, but what about other correlation measures? For example, you could try out distance correlation, which is sensitive to nonlinear relationships. You can find this measure in the `energy` R package, which you'll need to install and load with the following commands:
 
