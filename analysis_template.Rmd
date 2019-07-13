@@ -1,5 +1,5 @@
 ---
-title: "Los Coderiquans"
+title: "Los Codiquas"
 output: html_document
 date: Replicathon 2019
 author: Giovanni Cortés & Alejandro Armas
@@ -207,8 +207,8 @@ The drug that is most correlated is PD-0325901, the drug that is least correlate
 7. We have explored Pearson and Spearman correlation, but what about other correlation measures? For example, you could try out distance correlation, which is sensitive to nonlinear relationships. You can find this measure in the `energy` R package, which you'll need to install and load with the following commands:
 
     ```{r, eval=FALSE}
-    install.packages("energy")
-    load(energy)
+    #install.packages("energy")
+    library(energy)
     ```
 
     Then, you can compute distance correlation with the `dcor()` function. How does this correlation measure compare to Pearson and Spearman? Do your conclusions about the agreement between the two studies change at all using this measure?
@@ -218,8 +218,114 @@ The drug that is most correlated is PD-0325901, the drug that is least correlate
 1. Are there any cell lines that seem to be consistently resistant? (Hint: look for the 5 cell lines which seem the most resistant in both studies according to the average drug response by AUC; code from Tutorial 2a may help) What effect might this have on your conclusions and interpretations of the agreement between the studies? For example, do you observe any increase in replicability (as measured by correlation of drug response) if you exclude the most resistant cell lines?
 
 2. Classify each cell line as resistant or sensitive to a drug based on its AUC value (Hint: choose a cutoff for which cell lines with AUC below the cutoff are considered resistant and explain your choice of cutoff(s); code from Tutorial 2a may help). Compare the assigned resistance status of cell lines in GDSC and CCLE for each drug. How often do the two studies agree? 
+```{r}
+AUC_study1 <- rbeta(200, 1, 5)
+AUC_study2 <- rbeta(200, 1, 5)
+resistant <- data.frame(AUC_study1, AUC_study2)
 
+ggplot(resistant, aes(y = AUC_study2, x = AUC_study1)) +
+    geom_point() +
+    xlim(0, 1) +
+    ylim(0, 1) +
+    ggtitle("Simulated AUC of resistant cell lines")
+```
+```{r}
+summary <-
+    summarizedData %>% 
+    mutate(category = paste(sensitivity_GDSC, sensitivity_CCLE),
+           category = fct_recode(category,
+                                 "Both Resistant" = "Resistant Resistant",
+                                 "Both Sensitive" = "Sensitive Sensitive",
+                                 "GDSC Resistant / CCLE Sensitive" = "Resistant Sensitive",
+                                 "GDSC Sensitive / CCLE Resistant" = "Sensitive Resistant"))
+table(summarizedData$category)
+```
+```{r}
+summary %>%
+    subset(drug == "PLX4720") %>%
+    ggplot(aes(x = auc_GDSC, y = auc_CCLE, colour = category)) +
+    geom_point() + 
+    xlab("GDSC AUC") +
+    ylab("CCLE AUC") +
+    geom_hline(aes(yintercept = cutoff), colour="grey", alpha=0.75, lty=2) +
+    geom_vline(aes(xintercept = cutoff), colour="grey", alpha=0.75, lty=2) +
+    ggtitle("Drug PLX4720")
+
+```
+```{r}
+summary %>%
+    subset(drug == "Nilotinib") %>%
+    ggplot(aes(x = auc_GDSC, y = auc_CCLE, colour = category)) +
+    geom_point() + 
+    xlab("GDSC AUC") +
+    ylab("CCLE AUC") +
+    geom_hline(aes(yintercept = cutoff), colour="grey", alpha=0.75, lty=2) +
+    geom_vline(aes(xintercept = cutoff), colour="grey", alpha=0.75, lty=2) +
+    ggtitle("Drug Nilotinib")
+```
+```{r}
+summary %>%
+    subset(drug == "PHA-665752") %>%
+    ggplot(aes(x = auc_GDSC, y = auc_CCLE, colour = category)) +
+    geom_point() + 
+    xlab("GDSC AUC") +
+    ylab("CCLE AUC") +
+    geom_hline(aes(yintercept = cutoff), colour="grey", alpha=0.75, lty=2) +
+    geom_vline(aes(xintercept = cutoff), colour="grey", alpha=0.75, lty=2) +
+    ggtitle("Drug PHA-665752")
+```
+```{r}
+summary %>%
+    subset(drug == "PD-0325901") %>%
+    ggplot(aes(x = auc_GDSC, y = auc_CCLE, colour = category)) +
+    geom_point() + 
+    xlab("GDSC AUC") +
+    ylab("CCLE AUC") +
+    geom_hline(aes(yintercept = cutoff), colour="grey", alpha=0.75, lty=2) +
+    geom_vline(aes(xintercept = cutoff), colour="grey", alpha=0.75, lty=2) +
+    ggtitle("Drug PD-0325901")
+```
 3. Compute the Matthews correlation coefficient for sensitivity status (from #2) of cell lines in GDSC and CCLE for each drug (Hint: code from Tutorial 2a may help). Do certain drugs show more or less agreement between studies?
+```{r}
+summary <- summary %>% 
+              mutate(cutoff = ifelse(drug == "paclitaxel", 0.4, 0.1),
+                     sensitivity_GDSC = factor(ifelse( auc_GDSC < cutoff, "Resistant", "Sensitive")), 
+                     sensitivity_CCLE = factor(ifelse( auc_CCLE < cutoff, "Resistant", "Sensitive"))) 
+
+table("GDSC" = summarizedData$sensitivity_GDSC,
+      "CCLE" = summarizedData$sensitivity_CCLE)
+
+```
+```{r}
+mcc <- function (study1, study2) {
+    BS <- sum(study1 == "Sensitive" & study2 == "Sensitive") 
+    BR <- sum(study1 == "Resistant" & study2 == "Resistant") 
+    SR <- sum(study1 == "Sensitive" & study2 == "Resistant") 
+    RS <- sum(study1 == "Resistant" & study2 == "Sensitive") 
+    
+    if (BS+SR == 0 | BS+RS == 0 | BR+SR == 0 |  BR+RS ==0){
+        mcc <- ((BS*BR)-(SR*RS)) 
+    }else{
+        mcc <- ((BS*BR)-(SR*RS)) / sqrt(exp((log(BS+SR)+log(BS+RS)+log(BR+SR)+log(BR+RS))))
+    }
+    return(mcc)
+}
+```
+```{r}
+drugCorrs <- summary %>% 
+    group_by(drug) %>% 
+    
+    summarise(matthews_corr = mcc(sensitivity_GDSC, sensitivity_CCLE))
+drugCorrs
+
+```
+```{r}
+ggplot(drugCorrs, aes(x = drug, y = matthews_corr)) +
+    geom_bar(stat = "identity") + 
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    xlab("Drug") +
+    ylab("Matthews Correlation Coefficient")
+```
 
 4. Are there any drugs for which most or all cell lines seem to be resistant in both studies (Hint: code from Tutorial 2a may help)? If so, what are the correlation values for these drugs? What do these results imply about the replicability of these studies?
 
