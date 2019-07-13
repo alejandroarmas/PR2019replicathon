@@ -185,7 +185,7 @@ drugCorrs %>%
     theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
     scale_fill_grey() +
     ylim(0, 1) + 
-    ggtitle("Correlation of cell line IC50 summaries between studies for each drug")
+    ggtitle("Correlation of cell line AUC summaries between studies for each drug")
 
 ```
 
