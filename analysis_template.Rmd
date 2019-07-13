@@ -196,9 +196,11 @@ Based on the correlation measures, we can conclude that they do not agree becaus
 
 4. Does the AUC or IC50 suggest more agreement between the studies? 
 
-
+The AUC correlation values suggest more agreement between the studies than the IC50 correlation values.
 
 5. Which drug do you think shows the most consistency between the studies? How about the least? 
+
+The drug that is most correlated is PD-0325901, the drug that is least correlated is PHA-665752
 
 6. If you calculated more than one type of correlation coefficient (for example Pearson and Spearman), how do they differ? Which do you think is a better summary of the consistency between the two studies? 
 
