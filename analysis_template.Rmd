@@ -169,11 +169,24 @@ ggplot( aes(x = auc_GDSC, y = auc_CCLE)) +
 2. Calculate correlation coefficients of the AUC in GDSC and CCLE for each drug (hint: code from Tutorial 1b may help). 
 ```{r}
 
+drugCorrs <- summary %>% 
+    group_by(drug) %>%
+    summarize(Pearson_auc  = cor(-log10(auc_GDSC / 10^6), -log10(auc_CCLE / 10^6), method = "pearson"),
+              
+              Spearman_auc = cor(-log10(auc_GDSC / 10^6), -log10(auc_CCLE / 10^6), method = "spearman"))
+
+drugCorrs
 
 ```
+
+
 3. Based on the scatterplot and correlation values, would you say that they tend to agree? Why or why not?
 
+Based on the correlation measures, we can conclude that they do not agree because the correlation values only exceed 50%
+
 4. Does the AUC or IC50 suggest more agreement between the studies? 
+
+
 
 5. Which drug do you think shows the most consistency between the studies? How about the least? 
 
