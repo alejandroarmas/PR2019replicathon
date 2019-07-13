@@ -192,7 +192,7 @@ drugCorrs %>%
 
 3. Based on the scatterplot and correlation values, would you say that they tend to agree? Why or why not?
 
-Based on the correlation measures, we can conclude that they do not agree because the correlation values only exceed 50%
+Based on the correlation measures, we can conclude that they do not agree because the correlation values only exceed 50% few times. We had an expectation of atleast lightly correlated values since the experiments were ran on the same cell lines
 
 4. Does the AUC or IC50 suggest more agreement between the studies? 
 
