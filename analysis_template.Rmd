@@ -171,11 +171,21 @@ ggplot( aes(x = auc_GDSC, y = auc_CCLE)) +
 
 drugCorrs <- summary %>% 
     group_by(drug) %>%
-    summarize(Pearson_auc  = cor(-log10(auc_GDSC / 10^6), -log10(auc_CCLE / 10^6), method = "pearson"),
+    summarize(Pearson_auc  = cor(auc_GDSC, auc_CCLE, method = "pearson", use = "na.or.complete"),
               
-              Spearman_auc = cor(-log10(auc_GDSC / 10^6), -log10(auc_CCLE / 10^6), method = "spearman"))
+              Spearman_auc = cor(auc_GDSC,auc_CCLE , method = "spearman", use = "na.or.complete"))
 
 drugCorrs
+
+drugCorrs <- gather(drugCorrs, measure, correlation, -drug)
+
+drugCorrs %>%
+    ggplot(aes(x = drug, y = correlation, fill = measure, group = measure)) +
+    geom_bar(stat = "identity", position = position_dodge(), colour = "black") + 
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    scale_fill_grey() +
+    ylim(0, 1) + 
+    ggtitle("Correlation of cell line IC50 summaries between studies for each drug")
 
 ```
 
