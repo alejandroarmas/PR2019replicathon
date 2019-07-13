@@ -1,5 +1,5 @@
 ---
-title: "Los Coderiquans"
+title: "Los Codicuas"
 output: html_document
 date: Replicathon 2019
 author: Giovanni Cortés & Alejandro Armas
@@ -18,7 +18,7 @@ The questions below will help guide you in your analyses and interpretation of r
 For each answer, include text by simply typing below the question. Include code in code blocks (include three back ticks at the start and end of each code block):
 
 ```{r}
-#Your code goes here
+library(tidyverse)
 ```
 
 You may find it helpful to use the version control and code sharing system called GitHub to work together with your team so that all of you can edit the same document and keep track of its changes. Here is a [setup guide](https://github.com/datasciencelabs/2016/blob/master/lectures/git-and-github/setting-up-git.Rmd) and [brief introduction to Git and GitHub](https://github.com/datasciencelabs/2016/blob/master/lectures/git-and-github/version-control.Rmd) from another course. The mentors will be able to help if you run into problems. 
@@ -46,9 +46,10 @@ rawData <- readRDS("data/rawPharmacoData.rds")
 
 1. How many cell-lines are contained in the data?
 ```{r}
+
 length(unique(model.summary$cellLine))
 length(unique(rawData$cellLine))
-length(unique(summary$cellLine))
+
 
 ```
 
@@ -204,11 +205,13 @@ The drug that is most correlated is PD-0325901, the drug that is least correlate
 
 6. If you calculated more than one type of correlation coefficient (for example Pearson and Spearman), how do they differ? Which do you think is a better summary of the consistency between the two studies? 
 
+The way Pearson and Spearman differ is that Pearson is more sensitive to outliers, it measures the magnitude of differences and is a more accurate representation of linearity whereas Spearman is more interested in the order of values.
+
 7. We have explored Pearson and Spearman correlation, but what about other correlation measures? For example, you could try out distance correlation, which is sensitive to nonlinear relationships. You can find this measure in the `energy` R package, which you'll need to install and load with the following commands:
 
     ```{r, eval=FALSE}
-    install.packages("energy")
-    load(energy)
+    #install.packages("energy")
+    library(energy)
     ```
 
     Then, you can compute distance correlation with the `dcor()` function. How does this correlation measure compare to Pearson and Spearman? Do your conclusions about the agreement between the two studies change at all using this measure?
